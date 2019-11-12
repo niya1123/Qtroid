@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+  jetty:
+    image: jetty:9.4.1-alpine
+    container_name: jetty-server
+    volumes:
+      - ./build/libs:/var/lib/jetty/webapps
+    ports:
+      - 4000:4000
+
+  react:
+    build:
+        context: ./react_dir
+        dockerfile: react_Dockerfile
+    container_name: react_app
+    volumes:
+        - ./react_dir:/app
+    ports:
+        - 8080:8080
+    command: create-react-app react_app
+    restart: always
+    tty: true
+    stdin_open: true
+
+  mysql:
+    image: mysql
+    container_name: mysql
+    hostname: mysql_host
+    environment:
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_DATABASE: qiita_rank
+        MYSQL_USER: user
+        MYSQL_PASSWORD: userpass
+        TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci --skip-character-set-client-handshake
+    volumes:
+        - ./db-data:/var/lib/mysql
+    ports:
+            - 3306:3306
+    restart: always
+
+  java:
+    build:
+        context: ./java_dir
+        dockerfile: java_Dockerfile
+    ports:
+      - 3000:3000
+    container_name: java_app
+    depends_on:
+      - jetty
+      - react
+      - mysql
+    volumes:
+      - .:/app
+    command: /bin/bash
+    tty: true
+    stdin_open: true

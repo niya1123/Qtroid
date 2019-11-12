@@ -1,0 +1,10 @@
+FROM node:lts-alpine
+
+WORKDIR /app
+
+RUN set -x && \
+    apk update && \
+    npm install -g npm && \
+    npm install -g create-react-app
+
+CMD ["/bin/ash"]
