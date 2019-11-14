@@ -37,20 +37,3 @@ services:
     ports:
             - 3306:3306
     restart: always
-
-  java:
-    build:
-        context: ./java_dir
-        dockerfile: java_Dockerfile
-    ports:
-      - 3000:3000
-    container_name: java_app
-    depends_on:
-      - jetty
-      - react
-      - mysql
-    volumes:
-      - .:/app
-    command: /bin/bash
-    tty: true
-    stdin_open: true
