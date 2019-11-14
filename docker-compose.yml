@@ -9,18 +9,6 @@ services:
     ports:
       - 4000:4000
 
-  react:
-    build:
-        context: ./react_dir
-        dockerfile: react_Dockerfile
-    container_name: react_app
-    volumes:
-        - ./react_dir:/app
-    ports:
-        - 8080:8080
-    tty: true
-    stdin_open: true
-
   mysql:
     image: mysql
     container_name: mysql
@@ -47,7 +35,6 @@ services:
     container_name: java_app
     depends_on:
       - jetty
-      - react
       - mysql
     volumes:
       - .:/app
