@@ -1,14 +1,5 @@
-FROM ubuntu
+FROM java_app
 
 WORKDIR /app/java_dir/Qtroid
-
-RUN set -x && \
-    apt update && \
-    apt upgrade -y --no-install-recommends && \
-    apt install -y \
-        openjdk-8-jdk \
-	gradle \
-	python3
-
 
 CMD ["/bin/bash"]
