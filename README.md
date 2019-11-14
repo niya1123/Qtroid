@@ -2,20 +2,15 @@
 
 ## 入ってるもの
 
-jetty, react, java, msql
+java, python
 
-## 使い方
-docker-compose.ymlのファイルのあるディレクトリに入って, 
+## 予定
 
-` docker-compose up -d --build `
+pythonでスクレイピング, jsonの作成, mysqlへの登録をして, javaからその情報を取ってくる仕様
 
-これで起動.
+## 進捗
 
-` docker attach react_app ` もしくは, ` docker exec -it react_app /bin/ash ` でreact_appコンテナに接続.
-
-接続後, lsコマンドで, qiita_frontがあれば, ` rm -rf qiita_front `を実行.
-
-そのあと, ` npx create-react-app qiita_front ` を実行.
-
-buildが始まるので終了後, lsコマンドでqiita_frontディレクトリがあることを確認後, control+P, Q(controlを押しながらPとQを順番に押す)を実行して, host環境に戻ること.
-
+- [ ] javaからmysqlへの接続
+- [ ] pythonからmysqlへの接続
+- [ ] javaからpythonの呼び出し
+- [ ] pythonでqiitaのスクレイピング
