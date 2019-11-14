@@ -3,23 +3,21 @@
 // プラグイン指定
 // Javaをコンパイルするのに必要
 apply plugin: 'java'
+sourceSets{
+    main{
+        output.classesDir = 'src'
+    }
+}
 compileJava {
     options.encoding = 'utf-8'
-}
-// コンパイルのディレクトリなどの設定
-sourceSets{
-  main{
-      output.classesDir = './WebContent/WEB-INF/classes'
-  }
 }
 // フォルダーをEclipseプロジェクト化するのに必要
 apply plugin: 'eclipse'
 
 // WARを生成するのに必要
 apply plugin: 'war'
-
-war {
-    archiveName = 'Qtroid.war'
+war{
+    webXml = file('WebContent/WEB-INF/web.xml')
 }
 // リポジトリーとしてMavenリポジトリーを指定
 repositories {
@@ -32,3 +30,4 @@ dependencies {
     // サーブレットを作成するのに最低限必要なJARを追加
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
 }
+

@@ -18,7 +18,7 @@
 
     <servlet>
         <servlet-name>Qtroid</servlet-name>
-        <servlet-class>Qtroid</servlet-class>
+        <servlet-class>test.TestServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
