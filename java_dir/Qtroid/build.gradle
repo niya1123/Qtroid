@@ -1,0 +1,34 @@
+// Javaのビルドスクリプト
+
+// プラグイン指定
+// Javaをコンパイルするのに必要
+apply plugin: 'java'
+compileJava {
+    options.encoding = 'utf-8'
+}
+// コンパイルのディレクトリなどの設定
+sourceSets{
+  main{
+      output.classesDir = './WebContent/WEB-INF/classes'
+  }
+}
+// フォルダーをEclipseプロジェクト化するのに必要
+apply plugin: 'eclipse'
+
+// WARを生成するのに必要
+apply plugin: 'war'
+
+war {
+    archiveName = 'Qtroid.war'
+}
+// リポジトリーとしてMavenリポジトリーを指定
+repositories {
+    mavenCentral()
+}
+
+// 依存関係を記述する
+dependencies {
+    // providedCompile: コンパイル依存だがWARに含めない
+    // サーブレットを作成するのに最低限必要なJARを追加
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+}
