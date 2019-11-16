@@ -5,7 +5,7 @@
 apply plugin: 'java'
 sourceSets{
     main{
-        output.classesDir = 'src'
+        output.classesDir = 'WebContent/WEB-INF/classes'
     }
 }
 compileJava {
@@ -17,7 +17,7 @@ apply plugin: 'eclipse'
 // WARを生成するのに必要
 apply plugin: 'war'
 war{
-    webXml = file('WebContent/WEB-INF/web.xml')
+    archiveName = 'Qtroid.war'
 }
 // リポジトリーとしてMavenリポジトリーを指定
 repositories {
