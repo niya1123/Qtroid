@@ -27,7 +27,7 @@ def execSearch(browser: webdriver):
     # sleep(1)
 
     # スクリーンショット
-    browser.save_screenshot('./images/' + dtstr + '.png')
+    browser.save_screenshot('./' + dtstr + '.png')
 
 
 if __name__ == '__main__':

@@ -13,18 +13,38 @@ class QiitaGetRanking():
     """
 
     def __init__(self, browser: webdriver):
+        """
+        デフォルトの値を設定する.
+
+        Parameters
+        ----------
+        browser: webdriver
+            スクレイピングするためのwebdriverオブジェクト
+        """
         browser.get('https://qiita.com')
         self.encoding = 'utf-8'
         self.html = browser.page_source.encode(self.encoding)
 
-    def get_tag_ranking(self):
+    def get_tag_ranking(self) -> dict:
+        """
+        Qiitaからタグランキングを取得する関数.
+
+        Returns
+        -------
+        ranking_data: dict
+            タグランキングを収めた辞書オブジェクト.
+        """
         soup = BeautifulSoup(self.html, "html.parser")
         ra_tag_names = soup.find_all(class_='ra-Tag_name pr-1')
         ranking_data = {}
         for i, ra_tag_name in enumerate(ra_tag_names):
             ranking_data[i+1] = ra_tag_name.text.encode(self.encoding)
+        return ranking_data
 
 if __name__ == "__main__":
+    """
+    main文. browserはhtmlの取得が終わり次第閉じること.エラーが出てきたときも同様.
+    """
     try:
         browser = webdriver.Remote(
             command_executor='http://selenium-hub:4444/wd/hub',
