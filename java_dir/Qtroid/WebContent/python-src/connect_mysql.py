@@ -38,10 +38,10 @@ class ConnectMySQL():
         """
         self.cur.execute("DROP TABLE IF EXISTS tag_ranking")
 
-        self.cur.execute("CREATE TABLE tag_ranking (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL)")
+        self.cur.execute("CREATE TABLE tag_ranking (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL, url VARCHAR(500) NOT NULL)")
 
         for rank in list(tag_ranking_data.keys()):
-            self.cur.execute("INSERT INTO tag_ranking (ranking, tag_name) VALUES (%d, '%s')"%(rank, tag_ranking_data[rank].decode('utf-8')))
+            self.cur.execute("INSERT INTO tag_ranking (ranking, tag_name, url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
 
         self.conn.commit()
         self.conn.close()

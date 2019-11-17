@@ -25,7 +25,7 @@ class QiitaGetRanking():
 
     def get_tag_ranking(self) -> dict:
         """
-        Qiitaからタグランキングを取得する関数.
+        Qiitaからタグランキングに関する情報を取得する関数.
 
         Returns
         -------
@@ -36,8 +36,18 @@ class QiitaGetRanking():
         ra_tag_names = soup.find_all(class_='ra-Tag_name pr-1')
         tag_ranking_data = {}
         for i, ra_tag_name in enumerate(ra_tag_names):
-            tag_ranking_data[i+1] = ra_tag_name.text.encode(self.encoding)
+            tag_ranking_data[i+1] = [ra_tag_name.text, 'https://qiita.com/tags/%s'%(ra_tag_name.text.lower())]
         return tag_ranking_data
+
+    def get_tag_ranking_article(self, browser: webdriver, tag_ranking_data: dict):
+        """
+        各タグランキングに応じたトレンド記事のURLを取得する関数.
+        """
+        # article_link = {}
+        # for tag_name in list(tag_ranking_data.values()):
+        #     article_link[tag_name.lower().decode(self.encoding)] = 'https://qiita.com/tags/%s'%(tag_name.lower().decode(self.encoding))
+        # return article_link
+        pass
 
 if __name__ == "__main__":
     """
@@ -49,11 +59,13 @@ if __name__ == "__main__":
             desired_capabilities=DesiredCapabilities.CHROME)
         WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
         qgr = QiitaGetRanking(browser)
+        ranking_data = qgr.get_tag_ranking()
+        # qgr.get_tag_ranking_article(browser, ranking_data)
+        cm = connect_mysql.ConnectMySQL()
+        cm.register_tag_ranking(ranking_data)
+    except:
         browser.close()
         browser.quit()
-        cm = connect_mysql.ConnectMySQL()
-        cm.register_tag_ranking(qgr.get_tag_ranking())
-
-    except:
+    finally:
         browser.close()
         browser.quit()
