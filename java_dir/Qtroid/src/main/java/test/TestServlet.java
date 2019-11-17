@@ -17,7 +17,7 @@ public class TestServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         
         String name = (String) req.getAttribute("userName");
-
+        
         if(name == null || "".equals(name))
             req.setAttribute("userName", "Guest");
         
