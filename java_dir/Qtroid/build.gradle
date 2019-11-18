@@ -32,10 +32,14 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     // mysqlに接続するためのもの
     // https://mvnrepository.com/artifact/mysql/mysql-connector-java
-    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.12'
 }
 
 apply plugin: 'application'
 
 mainClassName = 'test.TestMySQL'
+
+compileJava {
+    options.encoding = 'utf-8'
+}
 

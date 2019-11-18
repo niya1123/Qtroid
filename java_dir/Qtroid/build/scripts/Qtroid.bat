@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\Qtroid.jar;%APP_HOME%\lib\mysql-connector-java-6.0.6.jar;%APP_HOME%\lib\javax.servlet-api-3.1.0.jar
+set CLASSPATH=%APP_HOME%\lib\Qtroid.jar;%APP_HOME%\lib\mysql-connector-java-8.0.12.jar;%APP_HOME%\lib\javax.servlet-api-3.1.0.jar;%APP_HOME%\lib\protobuf-java-2.6.0.jar
 
 @rem Execute Qtroid
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %QTROID_OPTS%  -classpath "%CLASSPATH%" test.TestMySQL %CMD_LINE_ARGS%

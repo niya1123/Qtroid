@@ -1,4 +1,6 @@
 package test;
+
+import java.io.PrintStream;
 import java.sql.*;
 
 /**
@@ -10,10 +12,17 @@ public class TestMySQL {
         String msg = "";
 
         try {
+
+            PrintStream out = new PrintStream(System.out, true, "UTF-8");
+            out.println("try connect mysql driver...");
             Class.forName("com.mysql.cj.jdbc.Driver");
-            
-            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/qiita_rank?autoReconnect=true&useSSL=false", "user", "userpass");
+            out.println("now connect driver.");
+
+            out.println("try connect mysql server...");
+            Connection con = DriverManager.getConnection("jdbc:mysql://mysql:3306/qiita_rank?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9:00", 
+            "user", "userpass");
             Statement stmt = con.createStatement();
+            out.println("connected mysql!");
 
             String sqlStr = "SELECT * FROM tag_ranking";
 
@@ -25,10 +34,10 @@ public class TestMySQL {
                 String name = rs.getString("tag_name");
          
                 //表示
-                System.out.println(id + ":" + name);
+                out.println(id + ":" + name);
             }
 
-            System.out.println("hope outprint.");
+            out.println("hope outprint.");
 
             rs.close();
             stmt.close(); 
