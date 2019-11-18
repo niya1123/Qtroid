@@ -3,11 +3,12 @@
 // プラグイン指定
 // Javaをコンパイルするのに必要
 apply plugin: 'java'
-sourceSets{
-    main{
-        output.classesDir = 'WebContent/WEB-INF/classes'
-    }
-}
+// sourceSets{
+//     main{
+//         output.classesDir = 'WebContent/WEB-INF/classes'
+//     }
+// }
+// sourceSets.main.output.classesDir = 'WebContent/WEB-INF/classes'
 compileJava {
     options.encoding = 'utf-8'
 }
@@ -29,5 +30,12 @@ dependencies {
     // providedCompile: コンパイル依存だがWARに含めない
     // サーブレットを作成するのに最低限必要なJARを追加
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+    // mysqlに接続するためのもの
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
 }
+
+apply plugin: 'application'
+
+mainClassName = 'test.TestMySQL'
 
