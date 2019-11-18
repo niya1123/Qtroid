@@ -10,7 +10,7 @@ pythonでスクレイピング, jsonの作成, mysqlへの登録をして, java�
 
 ## 進捗
 
-- [ ] javaからmysqlへの接続
+- [x] javaからmysqlへの接続
 - [x] pythonからmysqlへの接続
 - [ ] javaからpythonの呼び出し
 - [x] pythonでqiitaのスクレイピング
