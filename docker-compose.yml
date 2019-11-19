@@ -1,14 +1,6 @@
 version: '3'
 
 services:
-  jetty:
-    image: jetty:9.4.1-alpine
-    container_name: jetty-server
-    volumes:
-      - ./build/libs:/var/lib/jetty/webapps
-    ports:
-      - 4000:4000
-
   react:
     build:
         context: ./react_dir
@@ -17,7 +9,7 @@ services:
     volumes:
         - ./react_dir:/app
     ports:
-        - 8080:8080
+        - 3000:3000
     tty: true
     stdin_open: true
 
@@ -37,20 +29,3 @@ services:
     ports:
             - 3306:3306
     restart: always
-
-  java:
-    build:
-        context: ./java_dir
-        dockerfile: java_Dockerfile
-    ports:
-      - 3000:3000
-    container_name: java_app
-    depends_on:
-      - jetty
-      - react
-      - mysql
-    volumes:
-      - .:/app
-    command: /bin/bash
-    tty: true
-    stdin_open: true
