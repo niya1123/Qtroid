@@ -3,11 +3,11 @@
 // プラグイン指定
 // Javaをコンパイルするのに必要
 apply plugin: 'java'
-// sourceSets{
-//     main{
-//         output.classesDir = 'WebContent/WEB-INF/classes'
-//     }
-// }
+sourceSets{
+    main{
+        output.classesDir = 'WebContent/WEB-INF/classes'
+    }
+}
 // sourceSets.main.output.classesDir = 'WebContent/WEB-INF/classes'
 compileJava {
     options.encoding = 'utf-8'
