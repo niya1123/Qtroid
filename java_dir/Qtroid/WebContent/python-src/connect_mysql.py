@@ -1,18 +1,3 @@
-# mysqlへの接続お試し
-
-# import mysql.connector
-
-# conn = mysql.connector.connect(user='root', password='root', host='mysql', database='test')
-# cur = conn.cursor()
-
-# cur.execute("select * from user;")
-
-# for row in cur.fetchall():
-#     print(row[0],row[1])
-
-# cur.close
-# conn.close
-
 import mysql.connector
 
 class ConnectMySQL():
@@ -38,10 +23,34 @@ class ConnectMySQL():
         """
         self.cur.execute("DROP TABLE IF EXISTS tag_ranking")
 
-        self.cur.execute("CREATE TABLE tag_ranking (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL, url VARCHAR(500) NOT NULL)")
+        self.cur.execute("CREATE TABLE tag_ranking (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL, tag_url VARCHAR(100) NOT NULL)")
 
         for rank in list(tag_ranking_data.keys()):
-            self.cur.execute("INSERT INTO tag_ranking (ranking, tag_name, url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
+            self.cur.execute("INSERT INTO tag_ranking (ranking, tag_name, tag_url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
 
+
+    def register_trend_data(self, trend_data: dict):
+        """
+        MySQLにトレンドデータを登録する関数.
+        """
+        print('drop table')
+        self.cur.execute("DROP TABLE IF EXISTS trend_data")
+
+        print('create table')
+        self.cur.execute("CREATE TABLE trend_data (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL, trend_title VARCHAR(255) NOT NULL, trend_url VARCHAR(100) NOT NULL)")
+
+        print('insert table')
+        for i, tag_name in enumerate(list(trend_data.keys())):
+            for trend_article_data in list(trend_data[tag_name]):
+                self.cur.execute("INSERT INTO trend_data (ranking, tag_name, trend_title, trend_url) VALUES (%d, '%s', '%s', '%s')"%
+                ( list(trend_article_data.keys())[0], 
+                tag_name, 
+                trend_article_data.get( list(trend_article_data.keys())[0] )[0], 
+                trend_article_data.get( list(trend_article_data.keys())[0] )[1] )
+                )
+
+    def connection_closed(self):
         self.conn.commit()
+        print('save')
         self.conn.close()
+        print("closed")

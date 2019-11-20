@@ -1,50 +1,71 @@
-#!/usr/local/bin/python3
 from selenium import webdriver
-#from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from time import sleep
-import datetime
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
+from bs4 import BeautifulSoup
+import connect_mysql
 
-def execSearch(browser: webdriver):
+class QiitaGetRanking():
     """
-    Googleで検索を実行する
-    :param browser: webdriver
+    Qiitaからランキングエータを取得し, mysqlに登録するクラス.
     """
-    # スクリーンショットのファイル名用に日付を取得
-    dt = datetime.datetime.today()
-    dtstr = dt.strftime("%Y%m%d%H%M%S")
 
-    # Googleにアクセス
-    # browser.get('https://www.google.co.jp/')
-    browser.get('https://qiita.com/')
-    sleep(1)
+    def __init__(self, browser: webdriver):
+        """
+        デフォルトの値を設定する.
 
-    # # キーワードの入力
-    # browser.find_element_by_id('lst-ib').send_keys('docker selenium')
+        Parameters
+        ----------
+        browser: webdriver
+            スクレイピングするためのwebdriverオブジェクト
+        """
+        browser.get('https://qiita.com')
+        self.encoding = 'utf-8'
+        self.html = browser.page_source.encode(self.encoding)
 
-    # # 検索実行
-    # browser.find_element_by_name('btnK').submit()
-    # sleep(1)
+    def get_tag_ranking(self) -> dict:
+        """
+        Qiitaからタグランキングに関する情報を取得する関数.
 
-    # スクリーンショット
-    browser.save_screenshot('./' + dtstr + '.png')
+        Returns
+        -------
+        tag_ranking_data: dict
+            タグランキングを収めた辞書オブジェクト.
+        """
+        soup = BeautifulSoup(self.html, "html.parser")
+        ra_tag_names = soup.find_all(class_='ra-Tag_name pr-1')
+        tag_ranking_data = {}
+        for i, ra_tag_name in enumerate(ra_tag_names):
+            tag_ranking_data[i+1] = [ra_tag_name.text, 
+            'https://qiita.com/tags/%s'%(ra_tag_name.text.lower())]
+        return tag_ranking_data
 
+    def get_tag_ranking_article(self, browser: webdriver, tag_ranking_data: dict):
+        """
+        各タグランキングに応じたトレンド記事のURLを取得する関数.
+        """
+        pass
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    """
+    main文. browserはhtmlの取得が終わり次第閉じること.エラーが出てきたときも同様.
+    """
     try:
-        #browser = webdriver.Firefox()  # 普通のFilefoxを制御する場合
-        #browser = webdriver.Chrome()   # 普通のChromeを制御する場合
-
-        # HEADLESSブラウザに接続
         browser = webdriver.Remote(
             command_executor='http://selenium-hub:4444/wd/hub',
             desired_capabilities=DesiredCapabilities.CHROME)
-
-        # Googleで検索実行
-        execSearch(browser)
-
-    finally:
-        # 終了
+        WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
+        print("start scrape")
+        qgr = QiitaGetRanking(browser)
+        ranking_data = qgr.get_tag_ranking()
+        # qgr.get_tag_ranking_article(browser, ranking_data)
+        print("connect to mysql")
+        cm = connect_mysql.ConnectMySQL()
+        cm.register_tag_ranking(ranking_data)
+        print("done")
+    except:
         browser.close()
         browser.quit()
-
+    finally:
+        browser.close()
+        browser.quit()
