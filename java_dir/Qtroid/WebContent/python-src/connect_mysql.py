@@ -37,16 +37,21 @@ class ConnectMySQL():
         self.cur.execute("DROP TABLE IF EXISTS trend_data")
 
         print('create table')
-        self.cur.execute("CREATE TABLE trend_data (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL, trend_title VARCHAR(255) NOT NULL, trend_url VARCHAR(100) NOT NULL)")
+        self.cur.execute("CREATE TABLE trend_data (ranking int NOT NULL, " 
+                                                  "tag_name VARCHAR(50) NOT NULL, " 
+                                                  "trend_title VARCHAR(255) NOT NULL, " 
+                                                  "like_count int NOT NULL, " 
+                                                  "trend_url VARCHAR(100) NOT NULL)")
 
         print('insert table')
         for i, tag_name in enumerate(list(trend_data.keys())):
             for trend_article_data in list(trend_data[tag_name]):
-                self.cur.execute("INSERT INTO trend_data (ranking, tag_name, trend_title, trend_url) VALUES (%d, '%s', '%s', '%s')"%
+                self.cur.execute("INSERT INTO trend_data (ranking, tag_name, trend_title, like_count, trend_url) VALUES (%d, '%s', '%s', %d, '%s')"%
                 ( list(trend_article_data.keys())[0], 
                 tag_name, 
-                trend_article_data.get( list(trend_article_data.keys())[0] )[0], 
-                trend_article_data.get( list(trend_article_data.keys())[0] )[1] )
+                trend_article_data.get( list(trend_article_data.keys())[0] )[0],
+                trend_article_data.get( list(trend_article_data.keys())[0] )[1], 
+                trend_article_data.get( list(trend_article_data.keys())[0] )[2] )
                 )
 
     def connection_closed(self):

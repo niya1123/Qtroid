@@ -35,11 +35,13 @@ class QiitaGetRanking():
             browser.get(tag_ranking_data[ranking][1])
             tag_trend_html = browser.page_source.encode('utf-8')
             soup = BeautifulSoup(tag_trend_html, "html.parser")
-            trends = soup.find_all(class_='tst-ArticleBody_title')[:6]
+            trends = soup.find_all(class_='tst-ArticleBody_title')
+            like_count = soup.find_all(class_='tst-ArticleBody_likeCount')
             trend_detail_list = []
             for i, trend in enumerate(trends):
-                trend_detail_list.append({i+1: [trend.text, 'https://qiita.com%s'%(trend.get('href'))]})
+                trend_detail_list.append({i+1: [trend.text, int(like_count[i].text), 'https://qiita.com%s'%(trend.get('href'))]})
             trend_data[tag_ranking_data[ranking][0]] = trend_detail_list
+        
         return trend_data
 
 
