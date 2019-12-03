@@ -23,10 +23,10 @@ class ConnectMySQL():
         """
         self.cur.execute("DROP TABLE IF EXISTS tag_ranking")
 
-        self.cur.execute("CREATE TABLE tag_ranking (ranking int NOT NULL, tag_name VARCHAR(50) NOT NULL, tag_url VARCHAR(100) NOT NULL)")
+        self.cur.execute("CREATE TABLE tag_ranking (id int NOT NULL, tag_name VARCHAR(50) NOT NULL, tag_url VARCHAR(100) NOT NULL)")
 
         for rank in list(tag_ranking_data.keys()):
-            self.cur.execute("INSERT INTO tag_ranking (ranking, tag_name, tag_url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
+            self.cur.execute("INSERT INTO tag_ranking (id, tag_name, tag_url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
 
 
     def register_trend_data(self, trend_data: dict):
@@ -37,7 +37,7 @@ class ConnectMySQL():
         self.cur.execute("DROP TABLE IF EXISTS trend_data")
 
         print('create table')
-        self.cur.execute("CREATE TABLE trend_data (ranking int NOT NULL, " 
+        self.cur.execute("CREATE TABLE trend_data (id int NOT NULL, " 
                                                   "tag_name VARCHAR(50) NOT NULL, " 
                                                   "trend_title VARCHAR(255) NOT NULL, " 
                                                   "like_count int NOT NULL, " 
@@ -46,7 +46,7 @@ class ConnectMySQL():
         print('insert table')
         for i, tag_name in enumerate(list(trend_data.keys())):
             for trend_article_data in list(trend_data[tag_name]):
-                self.cur.execute("INSERT INTO trend_data (ranking, tag_name, trend_title, like_count, trend_url) VALUES (%d, '%s', '%s', %d, '%s')"%
+                self.cur.execute("INSERT INTO trend_data (id, tag_name, trend_title, like_count, trend_url) VALUES (%d, '%s', '%s', %d, '%s')"%
                 ( list(trend_article_data.keys())[0], 
                 tag_name, 
                 trend_article_data.get( list(trend_article_data.keys())[0] )[0],
