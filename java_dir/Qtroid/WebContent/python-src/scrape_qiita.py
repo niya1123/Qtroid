@@ -43,7 +43,6 @@ class QiitaGetRanking():
                 trend_detail_list.append({i+1: [trend.text, int(like_count[i].text), 
                 'https://qiita.com%s'%(trend.get('href'))]})
             trend_data[tag_ranking_data[ranking][0]] = trend_detail_list
-        
         return trend_data
 
 
@@ -52,27 +51,23 @@ if __name__ == "__main__":
     """
     main文. browserはhtmlの取得が終わり次第閉じること.エラーが出てきたときも同様.
     """
-    try:
-        browser = webdriver.Remote(
-            command_executor='http://selenium-hub:4444/wd/hub',
-            desired_capabilities=DesiredCapabilities.CHROME)
-        print("start scrape")
-        browser.get('https://qiita.com')
-        WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
-        print("generate object")
-        qgr = QiitaGetRanking()
-        ranking_data = qgr.get_tag_ranking(browser)
-        trend_data = qgr.get_trend_data(ranking_data, browser)
-        # print(list(trend_data.values())[0][0].keys())
-        print("connect to mysql")
-        cm = connect_mysql.ConnectMySQL()
-        cm.register_tag_ranking(ranking_data)
-        cm.register_trend_data(trend_data)
-        cm.connection_closed()
-        print("done")
-    except:
-        browser.close()
-        browser.quit()
-    finally:
-        browser.close()
-        browser.quit()
+    
+    browser = webdriver.Remote(
+        command_executor='http://selenium-hub:4444/wd/hub',
+        desired_capabilities=DesiredCapabilities.CHROME)
+    print("start scrape")
+    browser.get('https://qiita.com')
+    WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
+    print("generate object")
+    qgr = QiitaGetRanking()
+    ranking_data = qgr.get_tag_ranking(browser)
+    trend_data = qgr.get_trend_data(ranking_data, browser)
+    browser.close()
+    browser.quit()
+    print("connect to mysql")
+    cm = connect_mysql.ConnectMySQL()
+    cm.register_tag_ranking(ranking_data)
+    cm.register_trend_data(trend_data)
+    cm.connection_closed()
+    print("done")
+    

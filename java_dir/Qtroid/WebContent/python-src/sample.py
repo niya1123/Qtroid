@@ -20,7 +20,7 @@ class QiitaGetRanking():
             スクレイピングするためのwebdriverオブジェクト
         """
         browser.get('https://qiita.com')
-        self.encoding = 'utf-8'
+        self.encoding = 'utf8mb4'
         self.html = browser.page_source.encode(self.encoding)
 
     def get_tag_ranking(self) -> dict:
