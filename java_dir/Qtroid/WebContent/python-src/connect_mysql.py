@@ -1,4 +1,4 @@
-import mysql.connector
+import mysql.connector, emoji
 
 class ConnectMySQL():
     """
@@ -66,7 +66,7 @@ class ConnectMySQL():
                     (
                         list(trend_article_data.keys())[0], 
                         tag_name,
-                        trend_article_data.get( list(trend_article_data.keys())[0] )[0],
+                        ''.join(['' if c in emoji.UNICODE_EMOJI else c for c in trend_article_data.get( list(trend_article_data.keys())[0] )[0]]),
                         trend_article_data.get( list(trend_article_data.keys())[0] )[1], 
                         trend_article_data.get( list(trend_article_data.keys())[0] )[2]
                     )

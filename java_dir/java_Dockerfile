@@ -2,4 +2,6 @@ FROM java_app
 
 WORKDIR /app/java_dir/Qtroid
 
+RUN pip3 install -r /app/java_dir/Qtroid/WebContent/python-src/requirements.txt
+
 CMD ["/bin/bash"]
