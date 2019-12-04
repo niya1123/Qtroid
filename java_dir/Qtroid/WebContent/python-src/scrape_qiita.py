@@ -3,7 +3,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
-import connect_mysql
+import register_mysql
 
 class QiitaGetRanking():
     """
@@ -65,9 +65,9 @@ if __name__ == "__main__":
     browser.close()
     browser.quit()
     print("connect to mysql")
-    cm = connect_mysql.ConnectMySQL()
-    cm.register_tag_ranking(ranking_data)
-    cm.register_trend_data(trend_data)
-    cm.connection_closed()
+    rm = register_mysql.RegisterMySQL()
+    rm.register_tag_ranking(ranking_data)
+    rm.register_trend_data(trend_data)
+    rm.connection_closed()
     print("done")
     

@@ -1,6 +1,6 @@
 import mysql.connector, emoji
 
-class ConnectMySQL():
+class RegisterMySQL():
     """
     MySQLに接続して, 操作するクラス.
     """
