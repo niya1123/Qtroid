@@ -46,18 +46,7 @@ class RegisterMySQL():
                                                 trend_url VARCHAR(100) NOT NULL)""")
 
         print('insert table')
-        # for tag_name in list(trend_data.keys()):
-        #     for trend_article_data in list(trend_data[tag_name]):
-        #         self.cur.execute("INSERT INTO trend_data (id, tag_name, trend_title, like_count, trend_url) VALUES (%d, '%s', '%s', %d, '%s')"% 
-        #                         ( 
-        #                         list(trend_article_data.keys())[0], 
-        #                         tag_name, 
-        #                         # trend_article_data.get( list(trend_article_data.keys())[0] )[0],
-        #                         "hoge",
-        #                         trend_article_data.get( list(trend_article_data.keys())[0] )[1], 
-        #                         trend_article_data.get( list(trend_article_data.keys())[0] )[2]
-        #                         )
-        #         )
+        
         query = 'INSERT INTO trend_data (id, tag_name, trend_title, like_count, trend_url) VALUES (%s, %s, %s, %s, %s)'
         for tag_name in list(trend_data.keys()):
             for trend_article_data in list(trend_data[tag_name]):
