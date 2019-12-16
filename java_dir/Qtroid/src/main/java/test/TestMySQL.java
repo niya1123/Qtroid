@@ -30,7 +30,7 @@ public class TestMySQL {
 
             while(rs.next()){
                 // レコードの値
-                int id = rs.getInt("ranking");
+                int id = rs.getInt("id");
                 String name = rs.getString("tag_name");
          
                 //表示
