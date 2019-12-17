@@ -1,11 +1,11 @@
-FROM ubuntu
+FROM alpine
 
 WORKDIR /app/java_dir/Qtroid
 
-RUN apt-get -y update && \
-apt-get -y upgrade && \
-apt-get install -y \
+RUN apk update && \
+apk --no-cache add -f \
 openjdk-8-jdk \
+bash \
 gradle
 
 CMD ["/bin/bash"]
