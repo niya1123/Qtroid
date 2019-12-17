@@ -1,11 +1,14 @@
-FROM python:3.7
+FROM python:3.7-alpine
 
 WORKDIR /app/java_dir/Qtroid/WebContent/python-src
 
-RUN pip install \
+RUN apk update && \
+    apk --no-cache add -f \
+    bash && \
+    pip install \
     beautifulsoup4 \
     selenium \
     mysql-connector-python \
-    emoji
+    emoji 
 
 CMD ["/bin/bash"]
