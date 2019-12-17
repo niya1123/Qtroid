@@ -1,5 +1,11 @@
-FROM java_app
+FROM ubuntu
 
 WORKDIR /app/java_dir/Qtroid
+
+RUN apt-get -y update && \
+apt-get -y upgrade && \
+apt-get install -y \
+openjdk-8-jdk \
+gradle
 
 CMD ["/bin/bash"]

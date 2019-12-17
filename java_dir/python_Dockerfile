@@ -1,0 +1,11 @@
+FROM python:3.7
+
+WORKDIR /app/java_dir/Qtroid/WebContent/python-src
+
+RUN pip install \
+    beautifulsoup4 \
+    selenium \
+    mysql-connector-python \
+    emoji
+
+CMD ["/bin/bash"]
