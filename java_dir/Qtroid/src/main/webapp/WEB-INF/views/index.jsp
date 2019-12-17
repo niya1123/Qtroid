@@ -8,7 +8,7 @@
     </head>
     <body>
         <% String userName = (String)request.getAttribute("userName"); %>
-        こんにちは、<%= userName %>さん!
+        こんにちは、"<%= userName %>"さん!
 
         <% if("Guest".equals(userName)) { %>
         <form method="POST" action="">
