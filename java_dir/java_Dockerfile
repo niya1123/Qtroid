@@ -5,6 +5,7 @@ WORKDIR /app/java_dir/Qtroid
 RUN apk update && \
 apk --no-cache add -f \
     bash \
+    curl \
     gradle 
 
 CMD ["/bin/bash"]

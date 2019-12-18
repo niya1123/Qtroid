@@ -27,12 +27,11 @@ public class TestServlet extends HttpServlet {
         resp.setContentType("text/html; charset=UTF-8"); //①ブラウザへ渡す情報の文字コードを指定
 
         // try {
+        //     String command ="curl -X GET python_app:5000/api/registerMySQL";
         //     PrintWriter out = resp.getWriter();
-        //     ProcessBuilder pb = new ProcessBuilder("ping java_app");
-        //     Process process = pb.start();
-        //     process.waitFor();
-        //     int ret = process.exitValue();   
-        //     out.println(String.valueOf(ret));
+        //     Process process = new ProcessBuilder(command.split(" ")).start();
+        //     process.waitFor();  
+        //     out.println("いけたわ");
         // } catch (Exception e) {
         //     PrintWriter out = resp.getWriter();
         //     out.println("コマンド失敗");
@@ -63,7 +62,7 @@ public class TestServlet extends HttpServlet {
             out.println("</tr>");
             while(rs.next()){
                 // レコードの値
-                int id = rs.getInt("id");
+                int id = rs.getInt("tag_id");
                 String name = rs.getString("tag_name");
                 String url = rs.getString("tag_url");
                 out.println("<tr>");
