@@ -24,10 +24,10 @@ class RegisterMySQL():
         print('drop table')
         self.cur.execute("DROP TABLE IF EXISTS tag_ranking")
         print('create table')
-        self.cur.execute("CREATE TABLE tag_ranking (id int NOT NULL, tag_name VARCHAR(50) NOT NULL, tag_url VARCHAR(100) NOT NULL)")
+        self.cur.execute("CREATE TABLE tag_ranking (tag_id int NOT NULL, tag_name VARCHAR(50) NOT NULL, tag_url VARCHAR(100) NOT NULL)")
         print('insert table')
         for rank in list(tag_ranking_data.keys()):
-            self.cur.execute("INSERT INTO tag_ranking (id, tag_name, tag_url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
+            self.cur.execute("INSERT INTO tag_ranking (tag_id, tag_name, tag_url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
 
 
     def register_trend_data(self, trend_data: dict):
@@ -39,15 +39,15 @@ class RegisterMySQL():
 
         print('create table')
         self.cur.execute("""CREATE TABLE trend_data (
-                                                id int NOT NULL,
-                                                tag_name VARCHAR(100) NOT NULL,
+                                                tag_id int NOT NULL,
+                                                tag_name VARCHAR(50) NOT NULL,
                                                 trend_title VARCHAR(255) NOT NULL,
                                                 like_count int NOT NULL,
                                                 trend_url VARCHAR(100) NOT NULL)""")
 
         print('insert table')
         
-        query = 'INSERT INTO trend_data (id, tag_name, trend_title, like_count, trend_url) VALUES (%s, %s, %s, %s, %s)'
+        query = 'INSERT INTO trend_data (tag_id, tag_name, trend_title, like_count, trend_url) VALUES (%s, %s, %s, %s, %s)'
         for tag_name in list(trend_data.keys()):
             for trend_article_data in list(trend_data[tag_name]):
                 self.cur.execute(

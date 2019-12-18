@@ -5,13 +5,6 @@ WORKDIR /app/java_dir/Qtroid
 RUN apk update && \
 apk --no-cache add -f \
     bash \
-    python3 \
-    py-pip \
-    gradle && \
-pip install \
-    beautifulsoup4 \
-    selenium \
-    mysql-connector-python \
-    emoji 
+    gradle 
 
 CMD ["/bin/bash"]

@@ -1,4 +1,0 @@
-lxml
-mysql-connector-python
-selenium
-emoji

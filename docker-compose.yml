@@ -57,3 +57,20 @@ services:
     command: /bin/bash
     tty: true
     stdin_open: true
+
+  python:
+    build:
+        context: ./java_dir
+        dockerfile: python_Dockerfile
+    ports:
+        - 5000:5000
+    container_name: python_app
+    depends_on:
+      - java
+      - mysql
+      - chrome
+    volumes:
+      - ./java_dir/Qtroid/WebContent/python-src:/app/java_dir/Qtroid/WebContent/python-src
+    command: python api.py
+    tty: true
+    stdin_open: true

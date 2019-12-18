@@ -9,6 +9,7 @@ RUN apk update && \
     beautifulsoup4 \
     selenium \
     mysql-connector-python \
-    emoji 
+    emoji \
+    flask
 
 CMD ["/bin/bash"]

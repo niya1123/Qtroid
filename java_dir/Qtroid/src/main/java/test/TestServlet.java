@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.PrintStream;
 import java.sql.*;
+// import java.io.ProcessBuilder;
+// import java.io.Process;
 
 
 import javax.servlet.RequestDispatcher;
@@ -24,7 +26,20 @@ public class TestServlet extends HttpServlet {
         
         resp.setContentType("text/html; charset=UTF-8"); //①ブラウザへ渡す情報の文字コードを指定
 
+        // try {
+        //     PrintWriter out = resp.getWriter();
+        //     ProcessBuilder pb = new ProcessBuilder("ping java_app");
+        //     Process process = pb.start();
+        //     process.waitFor();
+        //     int ret = process.exitValue();   
+        //     out.println(String.valueOf(ret));
+        // } catch (Exception e) {
+        //     PrintWriter out = resp.getWriter();
+        //     out.println("コマンド失敗");
+        // }
+
         try {
+
             
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql:3306/qiita_rank?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9:00", 
@@ -34,7 +49,8 @@ public class TestServlet extends HttpServlet {
 
             ResultSet rs = stmt.executeQuery(sqlStr);
             //②htmlを出力
-            PrintWriter out = resp.getWriter(); 
+            
+            PrintWriter out = resp.getWriter();
             out.println("<html>");
             out.println("<head>");
             out.println("</head>");
