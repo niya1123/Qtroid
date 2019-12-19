@@ -71,6 +71,6 @@ services:
       - chrome
     volumes:
       - ./java_dir/Qtroid/WebContent/python-src:/app/java_dir/Qtroid/WebContent/python-src
-    command: python qtroid.py
+    command: /bin/bash
     tty: true
     stdin_open: true
