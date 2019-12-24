@@ -35,6 +35,7 @@ services:
   
   chrome:
     image: selenium/node-chrome-debug
+    container_name: chrome
     depends_on:
       - selenium-hub
     environment:

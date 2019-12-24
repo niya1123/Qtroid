@@ -59,8 +59,25 @@ class QiitaGetRanking():
                 'https://qiita.com%s'%(trend.get('href'))]})
             trend_data[tag_ranking_data[ranking][0]] = trend_detail_list
         return trend_data
+    
+    def get_article_data(self, trend_data):
+        browser = self.browser
+        article_data = {}
 
+        for tag_name in list(trend_data.keys()):
+            for trend_article_data in list(trend_data[tag_name]):
+                browser.get(trend_article_data.get( list(trend_article_data.keys())[0] )[2])
+                WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
+                article_html = browser.page_source.encode('utf-8')
+                soup = BeautifulSoup(article_html, "html.parser")
+                article_body = soup.find(class_="it-MdContent")
+                link_tag_a = article_body.find_all("a")
+                hrefs = []
+                for a in link_tag_a:
+                    hrefs.append(a.get("href"))
+                article_data[trend_article_data.get( list(trend_article_data.keys())[0] )[0]] = hrefs
 
+        return article_data
 
 if __name__ == "__main__":
     """
@@ -78,6 +95,7 @@ if __name__ == "__main__":
     # trend_data = qgr.get_trend_data(ranking_data, browser)
     ranking_data = qgr.get_tag_ranking()
     trend_data = qgr.get_trend_data(ranking_data)
+    article_data = qgr.get_article_data(trend_data)
     qgr.close_browser()
     # browser.close()
     # browser.quit()
@@ -85,6 +103,7 @@ if __name__ == "__main__":
     rm = register_mysql.RegisterMySQL()
     rm.register_tag_ranking(ranking_data)
     rm.register_trend_data(trend_data)
+    rm.register_article_data(article_data)
     rm.connection_closed()
     print("done")
     

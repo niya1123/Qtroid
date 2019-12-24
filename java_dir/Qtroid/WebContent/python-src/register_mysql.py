@@ -60,7 +60,31 @@ class RegisterMySQL():
                         trend_article_data.get( list(trend_article_data.keys())[0] )[2]
                     )
                 )
-       
+
+    def register_article_data(self, article_data: dict):
+        """
+        MySQLにトレンドデータを登録する関数.
+        """
+        print('drop table')
+        self.cur.execute("DROP TABLE IF EXISTS article_data")
+
+        print('create table')
+        self.cur.execute("""CREATE TABLE article_data (
+                                                trend_title VARCHAR(255) NOT NULL,
+                                                link VARCHAR(255) NOT NULL)""")
+
+        print('insert table')
+        query = 'INSERT INTO article_data (trend_title, link) VALUES (%s, %s)'
+        for title in (list(article_data.keys())):
+            for link in (list(article_data.get(title))):
+                self.cur.execute(
+                    query,
+                    (
+                        ''.join(['' if c in emoji.UNICODE_EMOJI else c for c in title]),
+                        link
+                    )
+                )
+         
 
     def connection_closed(self):
         self.conn.commit()
