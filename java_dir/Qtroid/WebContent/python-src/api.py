@@ -13,7 +13,7 @@ def get_qtroid():
 def index():
     return "Hello world!!"
 
-@app.route('/api/get_tag_ranking')
+@app.route('/get_tag_ranking')
 def api_get_tag_ranking():
     qgr = get_qtroid()
     tag_ranking_data = qgr.get_tag_ranking()
@@ -22,7 +22,7 @@ def api_get_tag_ranking():
             'tag_ranking_data':tag_ranking_data
         })
 
-@app.route('/api/get_tag_trend')
+@app.route('/get_tag_trend')
 def api_get_tag_trend():
     qgr = get_qtroid()
     tag_trend_data = qgr.get_tag_ranking()
@@ -31,5 +31,16 @@ def api_get_tag_trend():
             'tag_trend_data':tag_ranking_data
         })
 
+@app.route('/get_article')
+def api_get_article():
+    qgr = get_qtroid()
+    tag_ranking = qgr.get_tag_ranking()
+    trend_data = qgr.get_trend_data(tag_ranking)
+    article_data = qgr.get_article_data(trend_data)
+    qgr.close_browser()
+    return jsonify({
+            'tag_trend_data':article_data
+        })
+
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)

@@ -3,6 +3,7 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
+from time import sleep
 import register_mysql
 
 class QiitaGetRanking():
@@ -63,18 +64,33 @@ class QiitaGetRanking():
     def get_article_data(self, trend_data):
         browser = self.browser
         article_data = {}
-
+        print("start")
         for tag_name in list(trend_data.keys()):
             for trend_article_data in list(trend_data[tag_name]):
                 browser.get(trend_article_data.get( list(trend_article_data.keys())[0] )[2])
+                sleep(2)
                 WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
                 article_html = browser.page_source.encode('utf-8')
                 soup = BeautifulSoup(article_html, "html.parser")
                 article_body = soup.find(class_="it-MdContent")
+                if article_body is None:
+                    pass
                 link_tag_a = article_body.find_all("a")
+                # sleep(1)
                 hrefs = []
                 for a in link_tag_a:
-                    hrefs.append(a.get("href"))
+                    link = a.get("href")
+                    if link is None:
+                        pass
+                    elif link.startswith("#"):
+                        pass
+                    elif "qiita-image-store" in link:
+                        pass
+                    else:
+                        hrefs.append(link)
+                #    hrefs.append(a.get("href"))
+                # hrefs = [s for s in hrefs if s.startswith("http")]
+                # hrefs = [s.get("href") for s in link_tag_a if s.get("href").startswith("h")]
                 article_data[trend_article_data.get( list(trend_article_data.keys())[0] )[0]] = hrefs
 
         return article_data
