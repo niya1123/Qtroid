@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from bs4 import BeautifulSoup
 from time import sleep
@@ -57,8 +58,8 @@ class QiitaGetRanking():
             WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
             tag_trend_html = browser.page_source.encode('utf-8')
             soup = BeautifulSoup(tag_trend_html, "html.parser")
-            trends = soup.find_all(class_='tst-ArticleBody_title')
-            like_count = soup.find_all(class_='tst-ArticleBody_likeCount')
+            trends = soup.find_all(class_='tst-ArticleBody_title')[:3]
+            like_count = soup.find_all(class_='tst-ArticleBody_likeCount')[:3]
             trend_detail_list = []
             for i, trend in enumerate(trends):
                 trend_detail_list.append({i+1: [trend.text, int(like_count[i].text), 
@@ -66,23 +67,35 @@ class QiitaGetRanking():
             trend_data[tag_url.split("/")[-1]] = trend_detail_list
         return trend_data
     
-    def get_article_data(self, trend_data: dict):
+    def get_article_data(self, trend_data: list):
         browser = self.browser
         article_data = {}
         print("start")
         
-        for tag_name in list(trend_data.keys()):
-            browser.get(trend_data.get(tag_name))
+        for data in trend_data:
+            print("before: ", browser.current_url)
+            browser.execute_script("window.open()")
+            browser.switch_to.window(browser.window_handles[-1])
+            browser.get(data[2])
+            print("changed: ", browser.current_url)
             WebDriverWait(browser, 30).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'it-MdContent')))
             article_html = browser.page_source.encode('utf-8')
             soup = BeautifulSoup(article_html, "html.parser")
             article_body = soup.find(class_="it-MdContent")
             link_tag_a = article_body.find_all("a")
-            hrefs = []
+            links = []
             for a in link_tag_a:
                 link = a.get("href")
-                hrefs.append(link)
-            article_data[tag_name] = hrefs
+                if link.startswith("#"):
+                    continue
+                else:
+                    links.append(link)
+            article_data[data[0]] = [data[1], links]
+            sleep(5)
+            browser.close()
+            browser.switch_to.window(browser.window_handles[0])
+            print("after: ", browser.current_url)
+
         return article_data
 
 if __name__ == "__main__":
@@ -94,12 +107,13 @@ if __name__ == "__main__":
     qgr = QiitaGetRanking()
     rm = register_mysql.RegisterMySQL()
     try:
-
+        print("scraping tag_ranking")
         # ランキングデータの取得
         ranking_data = qgr.get_tag_ranking()
         # DBにランキングデータを登録
         rm.register_tag_ranking(ranking_data)
         
+        print("scraping trend_data")
         # DBからtagのurlを取得
         tag_urls = rm.get_tag_urls()
         # タグランキングのトレンドデータを取得
@@ -107,10 +121,11 @@ if __name__ == "__main__":
         # DBにトレンドデータを登録
         rm.register_trend_data(trend_data)
 
+        print("scraping article_data")
         # DBからトレンドのurlを取得
         trend_urls = rm.get_trend_data()
         # トレンド記事のデータを取得
-        article_data = qgr.get_article_data(trend_data)
+        article_data = qgr.get_article_data(trend_urls)
         # DBにトレンド記事のデータを登録
         rm.register_article_data(article_data)
 
@@ -121,5 +136,6 @@ if __name__ == "__main__":
         rm.connection_closed()
         print("done")
     except:
+        print("Error")
         qgr.close_browser()
     

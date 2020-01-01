@@ -80,9 +80,9 @@ class RegisterMySQL():
         self.cur.execute("select tag_name ,trend_title,trend_url from trend_data")
 
         rows = self.cur.fetchall()
-        trend_data = {}
+        trend_data = []
         for row in rows:
-            trend_data[row[0]] = row[1]
+            trend_data.append([row[0], row[1], row[2]])
         return trend_data
 
 
@@ -101,14 +101,14 @@ class RegisterMySQL():
 
         print('insert table')
         query = 'INSERT INTO article_data (tag_name, trend_title, link) VALUES (%s, %s)'
-        for title in (list(article_data.keys())):
-            for link in (list(article_data.get(title))):
+        for tag_name in (list(article_data.keys())):
+            for data in (list(article_data[tag_name])):
                 self.cur.execute(
                     query,
                     (
                         tag_name,
-                        ''.join(['' if c in emoji.UNICODE_EMOJI else c for c in title]),
-                        link
+                        ''.join(['' if c in emoji.UNICODE_EMOJI else c for c in data[0]]),
+                        data[1]
                     )
                 )
          
