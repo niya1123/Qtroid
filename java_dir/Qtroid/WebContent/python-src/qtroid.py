@@ -74,6 +74,7 @@ class QiitaGetRanking():
         for tag_name in list(trend_data.keys()):
             browser.get(trend_data.get(tag_name))
             WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
+            browser.implicitly_wait(10)
             article_html = browser.page_source.encode('utf-8')
             soup = BeautifulSoup(article_html, "html.parser")
             article_body = soup.find(class_="it-MdContent")
