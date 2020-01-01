@@ -1,10 +1,13 @@
 from flask import Flask, jsonify
-import qtroid
+import register_mysql, qtroid
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False #日本語文字化け対策
 app.config["JSON_SORT_KEYS"] = False #ソートをそのまま
 
+
+def get_mysql():
+    return register_mysql.RegisterMySQL()
 
 def get_qtroid():
     return qtroid.QiitaGetRanking()
@@ -22,20 +25,21 @@ def api_get_tag_ranking():
             'tag_ranking_data':tag_ranking_data
         })
 
-@app.route('/get_tag_trend')
-def api_get_tag_trend():
-    qgr = get_qtroid()
-    tag_trend_data = qgr.get_tag_ranking()
-    qgr.close_browser()
-    return jsonify({
-            'tag_trend_data':tag_ranking_data
-        })
+# @app.route('/get_tag_trend')
+# def api_get_tag_trend():
+#     qgr = get_qtroid()
+#     my = get_mysql()
+#     tag_trend_data = qgr.get_tag_ranking()
+#     qgr.close_browser()
+#     return jsonify({
+#             'tag_trend_data':tag_ranking_data
+#         })
 
 @app.route('/get_article')
 def api_get_article():
     qgr = get_qtroid()
-    tag_ranking = qgr.get_tag_ranking()
-    trend_data = qgr.get_trend_data(tag_ranking)
+    my = get_mysql()
+    trend_data = my.get_trend_datas()
     article_data = qgr.get_article_data(trend_data)
     qgr.close_browser()
     return jsonify({

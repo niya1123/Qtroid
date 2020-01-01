@@ -30,6 +30,18 @@ class RegisterMySQL():
             self.cur.execute("INSERT INTO tag_ranking (tag_id, tag_name, tag_url) VALUES (%d, '%s', '%s')"%(rank, tag_ranking_data[rank][0], tag_ranking_data[rank][1]))
 
 
+    def get_tag_urls(self):
+        """
+        tag_rankingからtag_urlを取得する関数.
+        """
+        self.cur.execute("select tag_url from tag_ranking")
+
+        rows = self.cur.fetchall()
+        tag_urls = []
+        for row in rows:
+            tag_urls.append(row[0])
+        return tag_urls
+
     def register_trend_data(self, trend_data: dict):
         """
         MySQLにトレンドデータを登録する関数.
@@ -61,6 +73,19 @@ class RegisterMySQL():
                     )
                 )
 
+    def get_trend_datas(self):
+        """
+        trend_dataからtrend_urlを取得する関数.
+        """
+        self.cur.execute("select tag_name ,trend_title,trend_url from trend_data")
+
+        rows = self.cur.fetchall()
+        trend_datas = {}
+        for row in rows:
+            trend_datas[row[0]] = row[1]
+        return trend_datas
+
+
     def register_article_data(self, article_data: dict):
         """
         MySQLにトレンドデータを登録する関数.
@@ -70,16 +95,18 @@ class RegisterMySQL():
 
         print('create table')
         self.cur.execute("""CREATE TABLE article_data (
+                                                tag_name VARCHAR(50) NOT NULL,
                                                 trend_title VARCHAR(255) NOT NULL,
                                                 link VARCHAR(255) NOT NULL)""")
 
         print('insert table')
-        query = 'INSERT INTO article_data (trend_title, link) VALUES (%s, %s)'
+        query = 'INSERT INTO article_data (tag_name, trend_title, link) VALUES (%s, %s)'
         for title in (list(article_data.keys())):
             for link in (list(article_data.get(title))):
                 self.cur.execute(
                     query,
                     (
+                        tag_name,
                         ''.join(['' if c in emoji.UNICODE_EMOJI else c for c in title]),
                         link
                     )
