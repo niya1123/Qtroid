@@ -88,9 +88,11 @@ class QiitaGetRanking():
             link = a.get("href")
             if link.startswith("#"):
                 continue
+            elif "amazon-adsystem" in link:
+                continue
             else:
                 links.append(link)
-        article_data[data[0]] = [data[1], links]
+        article_data[data[0]] = [data[1], data[2], links]
         sleep(5)
         browser.close()
         browser.switch_to.window(browser.window_handles[0])

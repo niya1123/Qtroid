@@ -40,7 +40,7 @@ def api_get_article():
     qgr = get_qtroid()
     my = get_mysql()
     trend_data = my.get_trend_data()
-    article_data = qgr.get_article_data(trend_data)
+    article_data = qgr.get_article_data(trend_data[0])
     qgr.close_browser()
     return jsonify({
             'tag_trend_data':article_data
