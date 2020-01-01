@@ -101,14 +101,14 @@ class RegisterMySQL():
 
         print('insert table')
         query = 'INSERT INTO article_data (tag_name, trend_title, link) VALUES (%s, %s)'
-        for tag_name in (list(article_data.keys())):
-            for data in (list(article_data[tag_name])):
+        for tag_name in list(article_data.keys()):
+            for link in article_data[tag_name][1]:
                 self.cur.execute(
                     query,
                     (
                         tag_name,
-                        ''.join(['' if c in emoji.UNICODE_EMOJI else c for c in data[0]]),
-                        data[1]
+                        article_data[tag_name],
+                        link
                     )
                 )
          

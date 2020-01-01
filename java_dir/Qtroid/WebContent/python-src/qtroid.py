@@ -67,34 +67,34 @@ class QiitaGetRanking():
             trend_data[tag_url.split("/")[-1]] = trend_detail_list
         return trend_data
     
-    def get_article_data(self, trend_data: list):
+    def get_article_data(self, data):
         browser = self.browser
         article_data = {}
         print("start")
         
-        for data in trend_data:
-            print("before: ", browser.current_url)
-            browser.execute_script("window.open()")
-            browser.switch_to.window(browser.window_handles[-1])
-            browser.get(data[2])
-            print("changed: ", browser.current_url)
-            WebDriverWait(browser, 30).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'it-MdContent')))
-            article_html = browser.page_source.encode('utf-8')
-            soup = BeautifulSoup(article_html, "html.parser")
-            article_body = soup.find(class_="it-MdContent")
-            link_tag_a = article_body.find_all("a")
-            links = []
-            for a in link_tag_a:
-                link = a.get("href")
-                if link.startswith("#"):
-                    continue
-                else:
-                    links.append(link)
-            article_data[data[0]] = [data[1], links]
-            sleep(5)
-            browser.close()
-            browser.switch_to.window(browser.window_handles[0])
-            print("after: ", browser.current_url)
+        
+        # print("before: ", browser.current_url)
+        browser.execute_script("window.open()")
+        browser.switch_to.window(browser.window_handles[-1])
+        browser.get(data[2])
+        # print("changed: ", browser.current_url)
+        WebDriverWait(browser, 30).until(EC.presence_of_all_elements_located((By.CLASS_NAME, 'it-MdContent')))
+        article_html = browser.page_source.encode('utf-8')
+        soup = BeautifulSoup(article_html, "html.parser")
+        article_body = soup.find(class_="it-MdContent")
+        link_tag_a = article_body.find_all("a")
+        links = []
+        for a in link_tag_a:
+            link = a.get("href")
+            if link.startswith("#"):
+                continue
+            else:
+                links.append(link)
+        article_data[data[0]] = [data[1], links]
+        sleep(5)
+        browser.close()
+        browser.switch_to.window(browser.window_handles[0])
+        # print("after: ", browser.current_url)
 
         return article_data
 
@@ -124,8 +124,11 @@ if __name__ == "__main__":
         print("scraping article_data")
         # DBからトレンドのurlを取得
         trend_urls = rm.get_trend_data()
+
+        # for data in trend_urls:
         # トレンド記事のデータを取得
-        article_data = qgr.get_article_data(trend_urls)
+        # article_data = qgr.get_article_data(data)
+        article_data = qgr.get_article_data(trend_urls[0])
         # DBにトレンド記事のデータを登録
         rm.register_article_data(article_data)
 
