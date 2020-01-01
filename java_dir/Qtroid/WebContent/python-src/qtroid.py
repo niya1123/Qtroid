@@ -93,7 +93,7 @@ class QiitaGetRanking():
             else:
                 links.append(link)
         article_data[data[0]] = [data[1], data[2], links]
-        sleep(5)
+        sleep(1)
         browser.close()
         browser.switch_to.window(browser.window_handles[0])
         # print("after: ", browser.current_url)
