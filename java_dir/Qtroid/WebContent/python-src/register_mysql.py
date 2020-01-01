@@ -73,17 +73,17 @@ class RegisterMySQL():
                     )
                 )
 
-    def get_trend_datas(self):
+    def get_trend_data(self):
         """
         trend_dataからtrend_urlを取得する関数.
         """
         self.cur.execute("select tag_name ,trend_title,trend_url from trend_data")
 
         rows = self.cur.fetchall()
-        trend_datas = {}
+        trend_data = {}
         for row in rows:
-            trend_datas[row[0]] = row[1]
-        return trend_datas
+            trend_data[row[0]] = row[1]
+        return trend_data
 
 
     def register_article_data(self, article_data: dict):

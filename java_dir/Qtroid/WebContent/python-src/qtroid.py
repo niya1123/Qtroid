@@ -66,13 +66,13 @@ class QiitaGetRanking():
             trend_data[tag_url.split("/")[-1]] = trend_detail_list
         return trend_data
     
-    def get_article_data(self, trend_datas: dict):
+    def get_article_data(self, trend_data: dict):
         browser = self.browser
         article_data = {}
         print("start")
         
-        for tag_name in list(trend_datas.keys()):
-            browser.get(trend_datas.get(tag_name))
+        for tag_name in list(trend_data.keys()):
+            browser.get(trend_data.get(tag_name))
             WebDriverWait(browser, 15).until(EC.presence_of_all_elements_located)
             article_html = browser.page_source.encode('utf-8')
             soup = BeautifulSoup(article_html, "html.parser")
@@ -108,9 +108,9 @@ if __name__ == "__main__":
         rm.register_trend_data(trend_data)
 
         # DBからトレンドのurlを取得
-        trend_urls = rm.get_trend_datas()
+        trend_urls = rm.get_trend_data()
         # トレンド記事のデータを取得
-        article_data = qgr.get_article_data(trend_datas)
+        article_data = qgr.get_article_data(trend_data)
         # DBにトレンド記事のデータを登録
         rm.register_article_data(article_data)
 
