@@ -137,6 +137,8 @@ if __name__ == "__main__":
                 rm.commit_article_data(article_data)
         except Exception as e:
             print(e)
+            qgr.close_browser()
+            qgr = QiitaGetRanking()
         # トレンド記事のデータを取得
         # article_data = qgr.get_article_data(trend_urls[0])
         # DBにトレンド記事のデータを登録
