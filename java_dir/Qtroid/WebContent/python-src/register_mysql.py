@@ -86,9 +86,9 @@ class RegisterMySQL():
         return trend_data
 
 
-    def register_article_data(self, article_data: dict):
+    def create_article_data(self):
         """
-        MySQLにトレンドデータを登録する関数.
+        MySQLにarticle_dataテーブルを作る関数.
         """
         print('drop table')
         self.cur.execute("DROP TABLE IF EXISTS article_data")
@@ -97,20 +97,26 @@ class RegisterMySQL():
         self.cur.execute("""CREATE TABLE article_data (
                                                 tag_name VARCHAR(50) NOT NULL,
                                                 trend_title VARCHAR(255) NOT NULL,
-                                                link VARCHAR(255) NOT NULL)""")
+                                                link VARCHAR(1000) NOT NULL)""")
 
+    def commit_article_data(self, article_data: dict):
+        """
+        article_dataテーブルにデータを保存する関数.
+        """
         print('insert table')
-        query = 'INSERT INTO article_data (tag_name, trend_title, link) VALUES (%s, %s)'
+        query = 'INSERT INTO article_data (tag_name, trend_title, link) VALUES (%s, %s, %s)'
         for tag_name in list(article_data.keys()):
             for link in article_data[tag_name][1]:
+                print("execute")
                 self.cur.execute(
                     query,
                     (
                         tag_name,
-                        article_data[tag_name],
+                        article_data[tag_name][0],
                         link
                     )
                 )
+                self.conn.commit()
          
 
     def connection_closed(self):

@@ -86,15 +86,17 @@ class QiitaGetRanking():
         links = []
         for a in link_tag_a:
             link = a.get("href")
-            if link.startswith("#"):
+            if link is None:
                 continue
-            elif "amazon-adsystem" in link:
+            elif link.startswith("#"):
+                continue
+            elif "qiita-user-contents" in link:
                 continue
             else:
                 links.append(link)
-        article_data[data[0]] = [data[1], data[2], links]
-        sleep(1)
+        article_data[data[0]] = [data[1], links]
         browser.close()
+        sleep(3)
         browser.switch_to.window(browser.window_handles[0])
         # print("after: ", browser.current_url)
 
@@ -126,14 +128,18 @@ if __name__ == "__main__":
         print("scraping article_data")
         # DBからトレンドのurlを取得
         trend_urls = rm.get_trend_data()
-
-        # for data in trend_urls:
+        rm.create_article_data()
+        try:
+            for i, data in enumerate(trend_urls):
+                if i % 5 == 0:
+                    sleep(15)
+                article_data = qgr.get_article_data(data)
+                rm.commit_article_data(article_data)
+        except Exception as e:
+            print(e)
         # トレンド記事のデータを取得
-        # article_data = qgr.get_article_data(data)
-        article_data = qgr.get_article_data(trend_urls[0])
+        # article_data = qgr.get_article_data(trend_urls[0])
         # DBにトレンド記事のデータを登録
-        rm.register_article_data(article_data)
-
         # browserの閉じ
         qgr.close_browser()
 
