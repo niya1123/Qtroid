@@ -30,7 +30,7 @@ public class Servlet extends HttpServlet {
         out.println("</head>");
         out.println("<body>");
         JSONObject json = new JSONObject();
-        json.put("name","Taro");
+        json.put("name","太郎");
         json.put("age",22);
         json.put("birthday","12/14");
         out.println(json);
