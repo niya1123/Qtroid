@@ -96,7 +96,7 @@ class QiitaGetRanking():
                 links.append(link)
         article_data[data[0]] = [data[1], links]
         browser.close()
-        sleep(3)
+        sleep(5)
         browser.switch_to.window(browser.window_handles[0])
         # print("after: ", browser.current_url)
 
@@ -130,9 +130,7 @@ if __name__ == "__main__":
         trend_urls = rm.get_trend_data()
         rm.create_article_data()
         try:
-            for i, data in enumerate(trend_urls):
-                if i % 5 == 0:
-                    sleep(15)
+            for data in trend_urls:
                 article_data = qgr.get_article_data(data)
                 rm.commit_article_data(article_data)
         except Exception as e:

@@ -97,7 +97,7 @@ class RegisterMySQL():
         self.cur.execute("""CREATE TABLE article_data (
                                                 tag_name VARCHAR(50) NOT NULL,
                                                 trend_title VARCHAR(255) NOT NULL,
-                                                link VARCHAR(1000) NOT NULL)""")
+                                                link VARCHAR(3000) NOT NULL)""")
 
     def commit_article_data(self, article_data: dict):
         """
