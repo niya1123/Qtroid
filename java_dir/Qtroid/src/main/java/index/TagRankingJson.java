@@ -1,4 +1,4 @@
-package inddex;
+package index;
 
 
 import java.io.IOException;

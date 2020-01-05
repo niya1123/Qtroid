@@ -1,4 +1,4 @@
-package inddex;
+package index;
 
 
 import java.io.IOException;
@@ -41,10 +41,6 @@ public class TrendDataJson extends HttpServlet {
                 String trend_title = rs.getString("trend_title");
                 String like_count = rs.getString("like_count");
                 String trend_url = rs.getString("trend_url");
-                // list.add(String.valueOf(like_count));
-                // list.add(String.valueOf(tag_id));
-                // list.add(tag_name);
-                // list.add(trend_url);
                 jsonObj.put("ranking", String.valueOf(tag_id));
                 jsonObj.put("tag_name", tag_name);
                 jsonObj.put("trend_title", trend_title);
