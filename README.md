@@ -15,6 +15,6 @@ pythonでスクレイピング, jsonの作成, mysqlへの登録をして, java�
 
 - [x] javaからmysqlへの接続
 - [x] pythonからmysqlへの接続
-- [ ] javaからpythonの呼び出し
+- [x] javaからpythonの呼び出し
 - [x] pythonでqiitaのスクレイピング
 - [ ] フロント側との連携テスト
