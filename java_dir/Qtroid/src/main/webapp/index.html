@@ -1,13 +1,153 @@
 <!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-<html lang="ja">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Qtroid</title>
-    </head>
-    <body>
-        <p>Htmlやよ～</p>
-        <a href="/Qtroid/mysql">MYSQLやよ～</a>
-        <a href="/Qtroid/json">JSONやよ～</a> 
-    </body>
+		<!--「スニペット」:Webページのコンテンツ内容の概要を示すテキスト情報-->
+		<meta name="descriotion" content="本アプリケーションは,「Qtroid」と呼び,エンジニアリングに関する知識を記録・共有するためのサービスである「Qiita」内で,まず初めに閲覧者自身が気になる技術名(プログラミング言語や人工知能など)が書かれたタグを選択して, いいねと言う「Qiita」利用者がその記事につける評価が多い順に記事をソートし,その中にある参考文献(URL)をリストとしてまとめて,画面上に表示する." />
+
+		<!--検索ワード-->
+		<meta name="keywords" content="Qiita,参考文献,Qtroid,いいね順"/>
+		<title>Qtroid</title>
+
+		<link rel="stylesheet" type="text/css" href="./css/style2.css"/>
+
+		<script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+		<script type="text/javascript" src ="./js/index.js"></script>
+	</head>
+
+	<body>
+		<div class="wapperArea" id="wrapperArea">
+
+			<header id="headerArea">
+				<a href="https://t.co/ORQKVSFkwD"><img src="./img/Qtroid_logo.png" alt="Otroidロゴ" title="Qtroid"></a>
+			</header>
+
+		<div id="mainArea">
+			<div class="main_container">
+
+				<div class="tagRanking">
+					<form>
+						<table class="tag_word">
+							<caption><strong>人気タグ</strong></caption>
+							<tr><th>1位</th><td><a href="#" class="tag_button" id="button_1">Python</a></td></tr>
+							<tr><th>2位</th><td><a href="#" class="tag_button" id="button_2">JavaScript</a></td></tr>
+							<tr><th>3位</th><td><a href="#" class="tag_button" id="button_3">Rails</a></td></tr>
+							<tr><th>4位</th><td><a href="#" class="tag_button" id="button_4">AWS</a></td></tr>
+							<tr><th>5位</th><td><a href="#" class="tag_button" id="button_5">初心者</a></td></tr>
+						</table>
+					</form>
+				</div> <!-- tagRanking -->
+
+				<div class="goodRanking">
+					<div class="title" id="goodRanking"><strong>いいね・ランキング</strong></div>
+					<!-- <div> 謎 -->
+
+						<div class="article article_dammy">
+							<a class="user_Image" href="https://t.co/ORQKVSFkwD">
+								<img src ="./img/kindai.jpg" alt="user">
+							</a>
+							<div>
+								<a class="article_title" href="https://t.co/ORQKVSFkwD">近畿大学インスタはじめました！</a>
+								<div class="article_item">
+									<span class="good_count"></span>いいね999
+								</div>
+								<ul>参考URLリスト
+									<li>
+										<a href="https://t.co/ORQKVSFkwD">作成者</a>
+									</li>
+									<li>
+										<a href="https://t.co/ORQKVSFkwD">作成者</a>
+									</li>
+								</ul>
+							</div>
+						</div>  <!-- article -->
+
+						<div class="article article_dammy">
+							<a class="user_Image" href="https://t.co/ORQKVSFkwD">
+								<img src ="./img/kindai.jpg" alt="user">
+							</a>
+							<div>
+								<a class="article_title" href="https://t.co/ORQKVSFkwD">近畿大学インスタはじめました！</a>
+								<div class="article_item">
+									<span class="good_count"></span>いいね999
+								</div>
+								<ul>参考URLリスト
+									<li>
+										<a href="https://t.co/ORQKVSFkwD">作成者</a>
+									</li>
+									<li>
+										<a href="https://t.co/ORQKVSFkwD">作成者</a>
+									</li>
+								</ul>
+							</div>
+						</div>  <!-- article -->
+
+						<div class="article article_dammy">
+							<a class="user_Image" href="https://t.co/ORQKVSFkwD">
+								<img src ="./img/kindai.jpg" alt="user">
+							</a>
+							<div>
+								<a class="article_title" href="https://t.co/ORQKVSFkwD">近畿大学インスタはじめました！</a>
+								<div class="article_item">
+									<span class="good_count"></span>いいね999
+								</div>
+								<ul>参考URLリスト
+									<li>
+										<a href="https://t.co/ORQKVSFkwD">作成者</a>
+									</li>
+									<li>
+										<a href="https://t.co/ORQKVSFkwD">作成者</a>
+									</li>
+								</ul>
+							</div>
+						</div>  <!-- article -->
+
+					<!-- </div> 謎 -->
+				</div> <!-- goodRanking -->
+
+				<div class="aside">
+					<div class="notice">お知らせ</div>
+						<div id="kindaitwitter" style="overflow: scroll; max-height:300px;  margin-top=0px;">
+							<a class="twitter-timeline" href="https://twitter.com/kinkidaigakuPR?ref_src=twsrc%5Etfw">Tweets by kinkidaigakuPR</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+						</div>
+						<iframe id="kindaiMap"
+							src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.1391106850806!2d135.5861924152645!3d34.65118959337594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000df760cc7dd29%3A0x222f1e658e84c664!2z6L-R55W_5aSn5a2m!5e0!3m2!1sja!2sjp!4v1574131576908!5m2!1sja!2sjp"
+							width="300" height="200" frameborder="0" style="border:0;" allowfullscreen="">
+						</iframe>
+					</div> <!-- notice -->
+				</div> <!-- aside -->
+
+			</div> <!-- main_container -->
+
+			<footer id="footerArea">
+				<div class="footer_container">
+
+					<div class="footer">
+						<li class="footer_link">
+							<a class="team">© 2019 B04team </a>
+						</li>
+						<li class="footer_link">
+							<a class="terms_of_service">利用規約 </a>
+						</li>
+						<li class="footer_link">
+							<a class="help">ヘルプ</a>
+						</li>
+						<li class="footer_link">
+							<a href="What_is_Qtroid.html" class="what" id="what">Qtroidとは？</a>
+						</li>
+					</div> <!-- footer -->
+
+					<div class="footer">
+						<li class="footer_topReturn">
+							<a href="/Qtroid">ページトップに戻る</a>
+						</li>
+					</div>
+
+				</div> <!-- footercontainer -->
+			</footer> <!-- footerArea -->
+
+		</div> <!-- wapperArea -->
+	</body>
+
 </html>

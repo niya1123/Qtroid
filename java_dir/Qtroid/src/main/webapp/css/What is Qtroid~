@@ -1,0 +1,22 @@
+body{
+    background:#fffafa;
+    color: #333;
+    margin:0;
+}
+div{
+    display:block;
+    margin:0;
+}
+
+#headerArea{
+    background:#ffd700;
+    width:1500px;
+    margin:0;
+    padding:10px;
+}
+html{
+    font-size:20px;
+    /*remを使用した際の基準となる*/
+    margin-top:0;
+}
+

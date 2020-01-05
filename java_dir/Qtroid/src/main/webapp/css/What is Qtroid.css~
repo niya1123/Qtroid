@@ -1,0 +1,119 @@
+body{
+    background:#fffafa;
+    color: #333;
+    margin:0 auto;
+}
+div{
+    display:block;
+    margin:0;
+}
+/*--------------------------------------------------------------------*/
+
+#headerArea{
+    background:#ffd700;
+    width:100%;
+    margin:0 auto;
+    height:320px;
+}
+html{
+    font-size:20px;
+    /*remを使用した際の基準となる*/
+    margin-top:0 auto;
+    width:100%;
+    margin:0 auto;
+}
+
+
+
+.headerArea_background{
+    /*位置の設定*/
+    width: 100%;
+    height:60%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    
+    background-image: url(../img/fish01.png), url(../img/fish02.png);
+    background-repeat:no-repeat;
+    background-position:right top,left top;
+    opacity: 0.5;/*透明度*/
+
+}
+
+
+.What{
+    display:block;
+    font-size:1.7rem;
+    text-shadow:2px 2px 3px #FFFFFF;
+   
+}
+.title{
+     text-align: center;
+     text-decoration: underline;
+     text-underline-position:under;
+}
+
+.answer{
+    max-width: 670px;
+    margin: 0 auto;
+    font-size:1.2rem;
+    padding-top:15px;
+}
+
+/*---------------------------------------------------------------*/
+#mainArea{
+    margin-bottom:100px;
+}
+
+.how_to{
+    padding-top:90px;
+    display:block;
+    margin:0 auto;
+    max-width:720px;
+    
+}
+.how_to_title{
+    margin-bottom:40px;
+    text-align:center;
+}
+.how_to_label{
+    margin:0;
+    font-weight: 900;
+}
+
+.how_to_text{
+    margin:0;
+    font-weight:300;
+}
+.attention{
+    font-size:0.7rem;
+}
+
+/*----------------------------------------------------------*/
+.footer_container{
+    background:#ffd700;
+    padding-bottom:30px;
+}
+.footer{
+   
+    font-size:80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+.footer_link{
+    padding-top:60px;
+    margin:0;
+    margin-left:5px;
+    margin-right:5px;
+}
+.if{
+    width:50%;
+    font-size:0.6rem;
+    color:#545457;
+    text-align:center;
+}
+
+
+/*-----------------------------------------------------------------*/

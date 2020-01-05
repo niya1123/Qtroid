@@ -1,0 +1,209 @@
+body{
+    background:#fffafa;
+    color: #333;
+    margin:0;
+}
+
+#headerArea{
+    background:#ffd700;
+    width:100%;
+    margin:0;
+    padding:10px;
+}
+html{
+    font-size:20px;
+    /*remを使用した際の基準となる*/
+    margin-top:0;
+}
+
+#kindaiMap{
+}
+#kindaitwitter{
+    height:400px;
+    width:300px;
+    margin-bottom:10px;
+}
+
+.user_Image{
+    display:flex;
+    overflow: hidden;
+    border-radius: .2em;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    margin-top: 2px;
+    margin-right: 8px; 
+}
+
+
+
+
+
+
+.main_container{
+    display:flex;/*ブロックレベルのフレックスコンテナボックスを生成する*/
+    flex-flow:row nowrap;/*フレックスコンテナ内のアイテムの配置方向と折り返し方法をまとめて指定*/
+    max-width: 1100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-bottom:20px;
+    justify-content: center;
+    
+}
+
+.title{
+    text-algn:center;
+}
+
+.goodRanking{
+    
+    background:#FFFFFF;
+}
+
+.tagRanking{
+    margin-right:10px;
+}
+.tag_word{
+    width:250px;
+}
+.footer_container{
+    background:#ffd700;
+    padding-bottom:30px;
+}
+.footer{
+   
+    font-size:80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+.footer_link{
+    padding-top:60px;
+    margin:0;
+    margin-left:5px;
+    margin-right:5px;
+}
+.if{
+    width:50%;
+    font-size:0.6rem;
+    color:#545457;
+    text-align:center;
+}
+
+.title{
+    border-bottom:1px solid #e8e8e8;
+    padding:16px;/*内部の枠幅指定*/
+}
+.article{
+    display:flex;
+    border-bottom:1px solid #e8e8e8;
+    padding:16px;/*内部の枠幅指定*/
+    width:500px;
+    
+
+}
+
+.article_title{
+    display:inline-block;
+    font-size:0.9em;
+    font-weight:600;
+    color:inherit;/*親の要素を継承*/
+    word-wrap: break-word;
+    word-break: break-all;/*関係なく、表示範囲に合わせて改行します*/
+    box-sizing: border-box;/*パディングとボーダーを幅と高さに含める*/
+    text-decoration: none;/*文字の下線削除*/
+ 
+}
+
+.article_title:hover{
+    display:inline-block;
+    font-size:0.9em;
+    font-weight:600;
+    color:inherit;/*親の要素を継承*/
+    word-wrap: break-word;
+    word-break: break-all;/*関係なく、表示範囲に合わせて改行します*/
+    box-sizing: border-box;/*パディングとボーダーを幅と高さに含める*/
+    text-decoration:underline;
+}
+.article_item{
+    font-size:
+}
+.article_url{
+    word-wrap: break-word;
+    word-break: break-all;/*関係なく、表示範囲に合わせて改行します*/
+    box-sizing: border-box;/*パディングとボーダーを幅と高さに含める*/
+    
+}
+
+.tag_line{
+    margin:10px;
+}
+/*タグボタンのデザイン*/
+.tag_button{
+    display:inline-block;
+    padding:3px;
+    font-size:1.3rem;/*親の要素を*/
+    font-weight:600;
+    color:inherit;
+    background:#ffd700;
+    text-decoration: none;/*文字の下線削除*/
+    border-radius: 0.2em;/*丸みをつける*/
+    box-sizing: border-box;/*パディングとボーダーを幅と高さに含める*/
+    width:200px;
+    text-align:center;
+    border-bottom: solid 4px #d27d00;
+    
+}
+
+.tag_button:hover{
+    display:inline-block;
+    padding:3px;
+    font-size:1.3rem;/*親の要素を*/
+    font-weight:600;
+    color:inherit;
+    background:#ff8c00;
+    text-decoration: none;/*文字の下線削除*/
+    border-radius: 0.2em;/*丸みをつける*/
+    box-sizing: border-box;/*パディングとボーダーを幅と高さに含める*/
+    text-align:center;
+
+  
+    
+}
+/*ボタンにカーソルを当てた時に*/
+.tag_button:active{
+    display:inline-block;
+    padding:3px;
+    font-size:1.3rem;/*親の要素を*/
+    font-weight:600;
+    color:inherit;
+    background:#ff8c00;
+    text-decoration: none;/*文字の下線削除*/
+    border-radius: 0.2em;/*丸みをつける*/
+    box-sizing: border-box;/*パディングとボーダーを幅と高さに含める*/
+   /* margin-top:5px;*/
+    text-align:center;
+    border-bottom: solid 4px #fd9535;
+    
+   
+}
+
+.aside{
+    margin-left:15px;
+    padding-top:0px;
+    margin-top:0px;
+    
+    
+}
+.notice{
+    display:block;
+    background:#FFFFFF;
+    margin-top:0px;
+    margin-bottom:10px;
+    font-size:1.2rem;
+    padding:3px;
+    
+}
+
+//----------------------------------------------------------
