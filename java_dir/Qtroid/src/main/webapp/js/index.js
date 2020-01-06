@@ -18,7 +18,7 @@
 // }
 
 // jsonとてくる
-$.getJSON("test.json", function(data, status) { //url,callback
+$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data, status) { //url,callback
 		alert("Json data:" + tag-ranking.tag-id[1].tag-name); //タグランキング1位を取ってこれるはず
 	});
 
@@ -86,8 +86,21 @@ function getPage(elm){
 
 window.addEventListener("load", function() {
 	//ランキングのボタン
-	var rank1ButtonElement = document.getElementById("button_1");
-	rank1ButtonElement.addEventListener("click", replaceArticle, false);
+	// var rank1ButtonElement = document.getElementById("button_1");
+	// rank1ButtonElement.addEventListener("click", replaceArticle, false);
+	$('#button_1').on('click', replaceArticle);
+	$('#button_2').on('click', replaceArticle);
+	$('#button_3').on('click', replaceArticle);
+	$('#button_4').on('click', replaceArticle);
+	$('#button_5').on('click', replaceArticle);
+
+	//tag_ranking取ってくる
+	$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data, status) { //url,callback
+		alert("Json data:" + tag-ranking.tag-id[1].tag-name); //タグランキング1位を取ってこれるはず
+	});
+
+	//順位の内容
+	$('#button_1').text()
 
 	// var whatButton = document.getElementById("what");
 	// whatButton.addEventListener("click", loadWhat, false);
