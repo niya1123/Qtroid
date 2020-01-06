@@ -1,26 +1,23 @@
-// function getJSON() {
-// 	var req = new XMLHttpRequest();						// XMLHttpRequest オブジェクトを生成する
-// 	req.onreadystatechange = function() {				// XMLHttpRequest オブジェクトの状態が変化した際に呼び出されるイベントハンドラ
-// 		if(req.readyState == 4 && req.status == 200){	// サーバーからのレスポンスが完了し、かつ、通信が正常に終了した場合
+//json
+$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data) {
+	tag_ranking = data;
+	alert('json data : '+tag_ranking.1[0]);
+});
 
-// 			var data = JSON.parse(req.responseText);	// 取得した JSON ファイルの中身を変数へ格納
-// 			var len = data.length;						// JSON のデータ数を取得
+$.getJSON("http://localhost:8080/Qtroid/json/trend_data", function(data) {
+	trend_data = data;
+	alert('json data : trend_data.json');
+});
 
-// 			// JSON のデータ数分処理
-// 			for(var i=0; i<len; i++) {
-// 				console.log("id: " + data[i].id + ", name: " + data[i].name);
-// 			}
-
-// 		}
-// 	};
-// 	req.open("GET", "sample.json", false);				// HTTPメソッドとアクセスするサーバーのURLを指定
-// 	req.send(null);										// 実際にサーバーへリクエストを送信
-// }
+$.getJSON("http://localhost:8080/Qtroid/json/article_data", function(data) {
+	article_data = data;
+	alert('json data : article_data');
+});
 
 // jsonとてくる
-$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data, status) { //url,callback
-		alert("Json data:" + tag-ranking.tag-id[1].tag-name); //タグランキング1位を取ってこれるはず
-	});
+// $.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data, status) { //url,callback
+// 		alert("Json data:" + tag-ranking.tag-id[1].tag-name); //タグランキング1位を取ってこれるはず
+// 	});
 
 //デバッグ
 function alertp(){
@@ -59,49 +56,39 @@ function replaceArticle(){
 		// ${}
 }
 
-// load aboutpage
-function loadWhat(){
-	var $content = $('#wrapperArea');
+// // load aboutpage
+// function loadWhat(){
+// 	var $content = $('#wrapperArea');
 
-	$content.fadeOut(600, function() {
-		getPage("about.html")
-	});
-}
+// 	$content.fadeOut(600, function() {
+// 		getPage("about.html")
+// 	});
+// }
 
-// ajax
-function getPage(elm){
-	$.ajax({
-		type: 'GET',
-		url: elm,
-		dataType: 'html',
-		success: function(data){
-			$content.html(data).fadeIn(600);
-		},
-		error: function(){
-			alertp();
-		}
-	});
-}
+// // ajax
+// function getPage(elm){
+// 	$.ajax({
+// 		type: 'GET',
+// 		url: elm,
+// 		dataType: 'html',
+// 		success: function(data){
+// 			$content.html(data).fadeIn(600);
+// 		},
+// 		error: function(){
+// 			alertp();
+// 		}
+// 	});
+// }
 
-
-window.addEventListener("load", function() {
+//ロード
+$(document).ready(function(){
 	//ランキングのボタン
-	// var rank1ButtonElement = document.getElementById("button_1");
-	// rank1ButtonElement.addEventListener("click", replaceArticle, false);
-	$('#button_1').on('click', replaceArticle);
-	$('#button_2').on('click', replaceArticle);
-	$('#button_3').on('click', replaceArticle);
-	$('#button_4').on('click', replaceArticle);
-	$('#button_5').on('click', replaceArticle);
-
-	//tag_ranking取ってくる
-	$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data, status) { //url,callback
-		alert("Json data:" + tag-ranking.tag-id[1].tag-name); //タグランキング1位を取ってこれるはず
-	});
+	$('.tag_button').on('click', replaceArticle);
 
 	//順位の内容
-	$('#button_1').text()
-
-	// var whatButton = document.getElementById("what");
-	// whatButton.addEventListener("click", loadWhat, false);
-}, false);
+	// $('#button_1').text(tag_ranking.1[0]);
+	// $('#button_2').text(tag_ranking.2[0]);
+	// $('#button_3').text(tag_ranking.3[0]);
+	// $('#button_4').text(tag_ranking.4[0]);
+	// $('#button_5').text(tag_ranking.5[0]);
+});
