@@ -26,7 +26,6 @@ public class TagRankingJson extends HttpServlet {
 
         PrintWriter out = resp.getWriter();
         JSONObject json = new JSONObject();
-
         try {   
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://mysql:3306/qiita_rank?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9:00", 
@@ -42,8 +41,8 @@ public class TagRankingJson extends HttpServlet {
                 List<String> list = new ArrayList<String>();
                 list.add(tag_name);
                 list.add(tag_url);
-
-                json.put(String.valueOf(tag_id), list);
+            
+                json.put("ranking_"+String.valueOf(tag_id), list);
                 
             }
 
