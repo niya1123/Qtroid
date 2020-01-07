@@ -61,31 +61,45 @@ function replaceArticleEx(button_id, tag_name){ //button_1, python
 	//trend_data取ってくる
 	var trend_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/trend_data"));
 	//tag_nameでfilter
-	var matchData = trend_data.filter(function(item, index){
+	var trend_match_data = trend_data.filter(function(item, index){
 		if(item.tag_name == tag_name) return true;
 	});
 
+	// ｊそんとる
+	var article_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/article_data"));
+
 	//記事本体
 	var article='';
-	var len = matchData.length;
-	for(var i=len; i > 0; i--){
+	var trend_len = trend_match_data.length;
+	for(var i=trend_len; i > 0; i--){
+
 		article =
 		'<div class="article ' + tag_name +'">'+
 			'<a class="user_Image" href="https://t.co/ORQKVSFkwD">'+
 				'<img src ="./img/kindai.jpg" alt="user">'+
 			'</a>'+
 			'<div>'+
-				'<a class="article_title" href='+ matchData[i-1].trend_url +'>'+ matchData[i-1].trend_title +'</a>'+
+				'<a class="article_title" href='+ trend_match_data[i-1].trend_url +'>'+ trend_match_data[i-1].trend_title +'</a>'+
 				'<div class="article_item">'+
-					'<span class="good_count"></span>いいね '+ matchData[i-1].like_count +
+					'<span class="good_count"></span>いいね '+ trend_match_data[i-1].like_count +
 				'</div>'+
-				'<ul>参考URLリスト'+
-					'<li>'+
-						'<a href="https://t.co/ORQKVSFkwD">作成者</a>'+
-					'</li>'+
-					'<li>'+
-						'<a href="https://t.co/ORQKVSFkwD">作成者</a>'+
-					'</li>'+
+				'<ul>参考URLリスト';
+
+		//記事urlを取ってくる
+		//title de filer
+		var url_match_data = article_data.filter(function(item, index){
+			if(item.trend_title == trend_match_data[i-1].trend_title) return true;
+		});
+		//参考url
+		var url_len = url_match_data.length;
+		for(var j=0; j<url_len; j++){
+			article +=
+			'<li>'+
+				'<a href="'+ url_match_data[j].link +'">'+ url_match_data[j].link +'</a>'+
+			'</li>';
+		}
+
+		article +=
 				'</ul>'+
 			'</div>'+
 		'</div>';
@@ -102,7 +116,7 @@ $(document).ready(function(){
 	//json 読み込み
 	var tag_ranking = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/tag_ranking"));
 	// var trend_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/trend_data"));
-	var article_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/article_data"));
+	// var article_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/article_data"));
 
 	//順位の内容
 	$('#button_1').text(tag_ranking.ranking_1[0]);
@@ -120,8 +134,4 @@ $(document).ready(function(){
 		replaceArticleEx(id, tag_name); //button_1 python
 	});
 
-	//記事の設定
-	// $('#button_1').on('click', function(){
-		
-	// });
 });
