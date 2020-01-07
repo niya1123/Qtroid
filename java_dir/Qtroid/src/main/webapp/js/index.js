@@ -19,7 +19,7 @@ function alertp(){
 //要素いじる
 function replaceArticle(){
     //ダミーの削除
-    $('.article_dammy').remove();
+    $('.dammy').remove();
 
 		//要素の追加
 		var article =
@@ -48,44 +48,60 @@ function replaceArticle(){
 		// ${}
 }
 
-function replaceArticleEx(button_id){ //button_1
-	if()
-	//ダミーの削除
-	$('.article_dammy').remove();
+function replaceArticleEx(button_id, tag_name){ //button_1, python
+	// 記事の判別
+	// var str = $('.article').attr('class');
+	// str = str.replace('article', '');
 
-	//要素の追加
-	var article =
-		'<div class="article">'+
-		'<a class="user_Image" href="https://t.co/ORQKVSFkwD">'+
-			'<img src ="./img/kindai.jpg" alt="user">'+
-		'</a>'+
-		'<div>'+
-			'<a class="article_title" href="https://t.co/ORQKVSFkwD">近畿大学インスタはじめました！</a>'+
-			'<div class="article_item">'+
-				'<span class="good_count"></span>いいね999'+
+	//判定
+	// if(str != tag_name){//ボタンと違う記事 削除 and 更新
+		$('.article').remove();
+	// }
+
+	//trend_data取ってくる
+	var trend_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/trend_data"));
+	//tag_nameでfilter
+	var matchData = trend_data.filter(function(item, index){
+		if(item.tag_name == tag_name) return true;
+	});
+
+	//記事本体
+	var article='';
+	var len = matchData.length;
+	for(var i=len; i > 0; i--){
+		article =
+		'<div class="article ' + tag_name +'">'+
+			'<a class="user_Image" href="https://t.co/ORQKVSFkwD">'+
+				'<img src ="./img/kindai.jpg" alt="user">'+
+			'</a>'+
+			'<div>'+
+				'<a class="article_title" href='+ matchData[i-1].trend_url +'>'+ matchData[i-1].trend_title +'</a>'+
+				'<div class="article_item">'+
+					'<span class="good_count"></span>いいね '+ matchData[i-1].like_count +
+				'</div>'+
+				'<ul>参考URLリスト'+
+					'<li>'+
+						'<a href="https://t.co/ORQKVSFkwD">作成者</a>'+
+					'</li>'+
+					'<li>'+
+						'<a href="https://t.co/ORQKVSFkwD">作成者</a>'+
+					'</li>'+
+				'</ul>'+
 			'</div>'+
-			'<ul>参考URLリスト'+
-				'<li>'+
-					'<a href="https://t.co/ORQKVSFkwD">作成者</a>'+
-				'</li>'+
-				'<li>'+
-					'<a href="https://t.co/ORQKVSFkwD">作成者</a>'+
-				'</li>'+
-			'</ul>'+
-		'</div>'+
-	'</div>';
+		'</div>';
 
-	$('#goodRanking').append(article);
+		$('#goodRanking').append(article);
+	}
 
-	// ${}
-}
+
+}// replaceArticleEx
 
 //ロード
 $(document).ready(function(){
 
 	//json 読み込み
 	var tag_ranking = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/tag_ranking"));
-	var trend_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/trend_data"));
+	// var trend_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/trend_data"));
 	var article_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/article_data"));
 
 	//順位の内容
@@ -98,7 +114,10 @@ $(document).ready(function(){
 	//ランキングのボタン
 	$('.tag_button').on('click', function(){
 		var id = $(this).attr("id");
-		replaceArticle(id); //button_1
+		id = '#'+id;
+		var tag_name = $(id).text();
+
+		replaceArticleEx(id, tag_name); //button_1 python
 	});
 
 	//記事の設定
