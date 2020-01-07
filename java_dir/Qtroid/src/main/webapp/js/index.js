@@ -75,9 +75,6 @@ function replaceArticleEx(button_id, tag_name){ //button_1, python
 
 		article =
 		'<div class="article ' + tag_name +'">'+
-			'<a class="user_Image" href="https://t.co/ORQKVSFkwD">'+
-				'<img src ="./img/kindai.jpg" alt="user">'+
-			'</a>'+
 			'<div>'+
 				'<a class="article_title" href='+ trend_match_data[i-1].trend_url +'>'+ trend_match_data[i-1].trend_title +'</a>'+
 				'<div class="article_item">'+
