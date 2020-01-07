@@ -1,18 +1,39 @@
+var tag_ranking;
+
+function getJSON(url) {
+	var tmp;
+  var req = new XMLHttpRequest();		  // XMLHttpRequest オブジェクトを生成する
+  req.onreadystatechange = function() {		  // XMLHttpRequest オブジェクトの状態が変化した際に呼び出されるイベントハンドラ
+    if(req.readyState == 4 && req.status == 200){ // サーバーからのレスポンスが完了し、かつ、通信が正常に終了した場合
+			// alert(req.responseText);		          // 取得した JSON ファイルの中身を表示
+			tmp = req.responseText;
+    }
+  };
+  req.open("GET", url, false); // HTTPメソッドとアクセスするサーバーの　URL　を指定
+	req.send(null);					    // 実際にサーバーへリクエストを送信
+	return tmp;
+}
+
 //json
-$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data) {
-	tag_ranking = data;
-	alert('json data : '+tag_ranking.1[0]);
-});
+// var tag_ranking
+// function setPreference(){
+// 	$.ajaxSetup({async: false});//同期通信(json取ってくるまで待つ)
+// 	$.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data){
+// 		tag_ranking = data.param;
+// 	});
+// 	$.ajaxSetup({async: true});
+// 	alert(tag_ranking.ranking_1[0]);
+// }
 
-$.getJSON("http://localhost:8080/Qtroid/json/trend_data", function(data) {
-	trend_data = data;
-	alert('json data : trend_data.json');
-});
+// $.getJSON("http://localhost:8080/Qtroid/json/trend_data", function(data) {
+// 	trend_data = data;
+// 	alert('json data : trend_data.json');
+// });
 
-$.getJSON("http://localhost:8080/Qtroid/json/article_data", function(data) {
-	article_data = data;
-	alert('json data : article_data');
-});
+// $.getJSON("http://localhost:8080/Qtroid/json/article_data", function(data) {
+// 	article_data = data;
+// 	alert('json data : article_data');
+// });
 
 // jsonとてくる
 // $.getJSON("http://localhost:8080/Qtroid/json/tag_ranking", function(data, status) { //url,callback
@@ -82,13 +103,19 @@ function replaceArticle(){
 
 //ロード
 $(document).ready(function(){
+
+	//json 読み込み
+	var tag_ranking = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/tag_ranking"));
+	var trend_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/trend_data"));
+	var article_data = JSON.parse(getJSON("http://localhost:8080/Qtroid/json/article_data"));
+
 	//ランキングのボタン
 	$('.tag_button').on('click', replaceArticle);
 
 	//順位の内容
-	// $('#button_1').text(tag_ranking.1[0]);
-	// $('#button_2').text(tag_ranking.2[0]);
-	// $('#button_3').text(tag_ranking.3[0]);
-	// $('#button_4').text(tag_ranking.4[0]);
-	// $('#button_5').text(tag_ranking.5[0]);
+	$('#button_1').text(tag_ranking.ranking_1[0]);
+	$('#button_2').text(tag_ranking.ranking_2[0]);
+	$('#button_3').text(tag_ranking.ranking_3[0]);
+	$('#button_4').text(tag_ranking.ranking_4[0]);
+	$('#button_5').text(tag_ranking.ranking_5[0]);
 });
