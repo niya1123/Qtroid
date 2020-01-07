@@ -93,9 +93,18 @@ function replaceArticleEx(button_id, tag_name){ //button_1, python
 		//参考url
 		var url_len = url_match_data.length;
 		for(var j=0; j<url_len; j++){
+
+			//url長さ調整
+			var anker_text = url_match_data[j].link;
+			if(anker_text.length > 35){
+				anker_text = anker_text.substr(0, 35);
+				anker_text += '...';
+				console.log(anker_text.length);
+			}
+
 			article +=
 			'<li>'+
-				'<a href="'+ url_match_data[j].link +'">'+ url_match_data[j].link +'</a>'+
+				'<a href="'+ url_match_data[j].link +'">'+ anker_text +'</a>'+
 			'</li>';
 		}
 
