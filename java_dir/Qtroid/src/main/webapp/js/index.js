@@ -48,7 +48,7 @@ function replaceArticle(){
 		// ${}
 }
 
-function replaceArticleEx(button_id, tag_name){ //button_1, python
+function replaceArticleEx(tag_name){ //button_1, python
 	// 記事の判別
 	// var str = $('.article').attr('class');
 	// str = str.replace('article', '');
@@ -137,7 +137,10 @@ $(document).ready(function(){
 		id = '#'+id;
 		var tag_name = $(id).text();
 
-		replaceArticleEx(id, tag_name); //button_1 python
+		replaceArticleEx(tag_name); //button_1 python
 	});
+
+	//first view
+	replaceArticleEx(tag_ranking.ranking_1[0]);
 
 });
